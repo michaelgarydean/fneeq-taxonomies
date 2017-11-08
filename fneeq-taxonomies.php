@@ -65,8 +65,10 @@ function fneeq_add_categories_to_attachments() {
  * @TODO only do this if the topic post type exists.
  */
 
+add_action( 'admin_menu', 'fneeq_add_categories_to_topics_subbmenu' );
+
 function fneeq_add_categories_to_topics_subbmenu() {
-	
+	add_submenu_page('edit.php?post_type=topic', __( 'Categories', 'fneeq'  ), __( 'Categories', 'fneeq'  ), 'manage_categories', 'edit-tags.php?taxonomy=category&post_type=topic');
 }
 
 /**
