@@ -38,10 +38,10 @@ function fneeq_register_secteurs_taxonomy() {
 	  	'hierarchical'      => true,
   );	
 
-	//Register the new taxonomy and assign it to the actualite (post) and publication (publications) post types
+	//Register the new taxonomy and assign it to the attachment, actualite (post) and publication (publications) post types
 	register_taxonomy(
 		'secteur',
-		array( 'publications', 'post' ),
+		array( 'publications', 'post', 'attachment' ),
 		$args
 	);
 }
