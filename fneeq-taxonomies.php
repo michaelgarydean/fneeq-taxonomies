@@ -97,3 +97,50 @@ function fneeq_assign_category_to_post( $topic_id, $forum_id, $anonymous_data, $
 	//Replace the existing subject with the selected one
 	wp_set_post_terms( $topic_id, array( $term_id ), $taxonomy_name, false );
 }
+
+/**
+ * On each forum (where the topics are displayed), show the category that each topic has been assigned.  
+ *
+ * @see wp-content/plugins/bbpress/templates/default/bbpress/loop-single-topic.php
+ */
+
+//Action executes in the loop-single-topic.php template
+add_action( 'bbp_theme_after_topic_title', 'fneeq_add_category_column_to_topic_display' );
+
+function fneeq_add_category_column_to_topic_display() {
+	
+	//The machine name of the category taxonomy
+	$taxonomy_name = 'category';
+
+	//Get the topic ID
+	$topic_id = bbp_get_topic_id();
+	
+	//Retrieve the terms assigned to the topic (WP_Term objects)
+	$terms = wp_get_post_terms( $topic_id, $taxonomy_name );
+	
+	//Loop indexes used for formatting the string of terms to be shown
+	$number_of_terms = count( $terms );	
+	$index = 0;
+	
+	//Initialize variables to create a string of all the taxonomy terms
+	$terms_string = '';
+	$term_delimiter = ', ';
+
+	while( $index < $number_of_terms ) {
+		
+		//Don't prefix the term with a comma and a space if it is the first term
+		if ($index > 0) {
+			$terms_string = $terms_string . $term_delimiter;
+		}
+
+		//Concatenate the current term in the loop to the string of terms to output
+		$terms_string = $terms_string . $terms[$index]->name;
+		$index ++;
+	}
+	
+	//Display the terms beside the title
+	if( '' !== $terms_string ) {
+		$html_output = sprintf( "<span class=topic-%u-%s-terms>(%s)</span>", $topic_id, $taxonomy_name, $terms_string );
+		echo $html_output;
+	}
+}
