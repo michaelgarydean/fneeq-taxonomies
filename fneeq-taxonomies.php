@@ -105,9 +105,9 @@ function fneeq_assign_category_to_post( $topic_id, $forum_id, $anonymous_data, $
  */
 
 //Action executes in the loop-single-topic.php template
-add_action( 'bbp_theme_after_topic_title', 'fneeq_add_category_column_to_topic_display' );
+add_action( 'bbp_theme_after_topic_title', 'fneeq_show_category_terms_beside_topics_title' );
 
-function fneeq_add_category_column_to_topic_display() {
+function fneeq_show_category_terms_beside_topics_title() {
 	
 	//The machine name of the category taxonomy
 	$taxonomy_name = 'category';
